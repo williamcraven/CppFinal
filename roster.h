@@ -31,6 +31,10 @@ class Roster {
 
     void printByDegreeProgram(DegreeProgram degreeProgram);
 
+    int GetRosterSize() const;
+
+    Student* GetStudent(int index) const;
+
 
   private:
     static const int numStudents = 5;

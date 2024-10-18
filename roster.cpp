@@ -24,28 +24,28 @@ Roster::Roster() {
     std::vector<std::string> singleStudent; 
     std::string studentDataPart; 
 
-    int j = 0;
+    int j = -1;
     while (std::getline(ss, studentDataPart, ',')) {
       singleStudent.push_back(studentDataPart);
       j++;
     }
 
     DegreeProgram degreeProgram = SECURITY;
-    if (studentData[j] == "NETWORK") {
+    if (singleStudent[j] == "NETWORK") {
       degreeProgram = NETWORK;
     }
-    else if (studentData[j] == "SOFTWARE") {
+    else if (singleStudent[j] == "SOFTWARE") {
       degreeProgram = SOFTWARE;
     }
 
-    add(studentData[0],
-        studentData[1],
-        studentData[2],
-        studentData[3],
-        std::stoi(studentData[4]),
-        std::stoi(studentData[5]),
-        std::stoi(studentData[6]),
-        std::stoi(studentData[7]),
+    add(singleStudent[0],
+        singleStudent[1],
+        singleStudent[2],
+        singleStudent[3],
+        std::stoi(singleStudent[4]),
+        std::stoi(singleStudent[5]),
+        std::stoi(singleStudent[6]),
+        std::stoi(singleStudent[7]),
         degreeProgram);
   }
 }
@@ -83,20 +83,26 @@ void Roster::add(std::string studentID,
 }
     
 void Roster::remove(std::string studentID) {
+  bool notFound = false;
   for (int i = 0; i < numStudents; ++i) {
     if (classRosterArray[i] != nullptr && studentID == classRosterArray[i]->GetStudentId()) {
       delete classRosterArray[i];
       classRosterArray[i] = nullptr;
+      notFound = true;
     }
-    else {
+  }
+
+  if (!notFound) {
       std::cout << "ERROR: Such a student with this ID was not found." << std::endl;
-    }
   }
 }
 
 void Roster::printAll() {
   for (int i = 0; i < numStudents; ++i) {
-    classRosterArray[i]->Print();
+    if (classRosterArray[i] != nullptr) {
+      classRosterArray[i]->Print();
+    }
+    
   }
 }
 
@@ -107,8 +113,9 @@ void Roster::printAverageDaysInCourse(std::string studentID) {
   for (int i = 0; i < numStudents; ++i) {
     if (classRosterArray[i]->GetStudentId() == studentID) {
       avgValues = classRosterArray[i]->GetDaysInCourse();
+      break;
     }
-    break;
+    
   }
 
   avg = (avgValues[0] + avgValues[1] + avgValues[2]) / 3.0;
@@ -135,4 +142,12 @@ void Roster::printByDegreeProgram(DegreeProgram degreeProgram) {
       classRosterArray[i]->Print();
     }
   }
+}
+
+int Roster::GetRosterSize() const {
+  return classRosterArray.size();
+}
+
+Student* Roster::GetStudent(int index) const {
+  return classRosterArray[index];
 }

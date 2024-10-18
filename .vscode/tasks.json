@@ -10,7 +10,9 @@
         "-g",
         "${file}",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${fileDirname}/${fileBasenameNoExtension}",
+        "student.cpp",
+        "roster.cpp"
       ],
       "options": {
         "cwd": "${fileDirname}"
