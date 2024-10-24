@@ -66,12 +66,15 @@ void Roster::add(std::string studentID,
          int daysInCourse2,
          int daysInCourse3,
          DegreeProgram degreeProgram) {
+
+  std::array<int, 3> daysInCourse = {daysInCourse1, daysInCourse2, daysInCourse3};
+
   Student* newStudent = new Student(studentID, 
                                   firstName, 
                                   lastName,
                                   emailAddress,
                                   age,
-                                  {daysInCourse1, daysInCourse2, daysInCourse3},
+                                  daysInCourse,
                                   degreeProgram);
 
   for (int i = 0; i < numStudents; ++i) {
